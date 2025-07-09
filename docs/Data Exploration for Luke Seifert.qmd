@@ -36,7 +36,7 @@ library(readr)
 library(ggplot2)
 
 # Read data
-raw_data <- read_csv(here::here("data/raw/WFP_raw_data_cleaned_7_8.csv"))
+raw_data <- read_csv(here::here("data/raw/WFP_data_cleaned_with_joseph_7_9.csv"))
 ```
 
 ## Data Exploration Approach
@@ -55,10 +55,6 @@ Some questions were often skipped over and answered partially. Some data recieve
 
 The resulting tidied data set has been uploaded to the data/raw folder, and is ready for further data tidying and analysis.
 
-```{r}
-#my csv has too many rows present - I want to delete all the empty rows
-```
-
 # Results
 
 ## Initial Data Exploration
@@ -70,9 +66,76 @@ The resulting tidied data set has been uploaded to the data/raw folder, and is r
 dim(raw_data)
 #spec(raw_data)
 
-  
+#colnames(raw_data)
+```
+
+```{r}
+# Select only the desired columns
+filtered_data <- raw_data |> 
+  select(
+    # General Info
+    "What is your full name?",
+    "District",
+    "What is the name of the scheme you are currently visiting?",
+
+    # Misc
+    "How many total households does this scheme service? (HH)",
+    "When was the scheme finished being built?...3",
+    "How much total water can they hold? (liters)",
+    "What is the average household monthly income in this village? (kwacha)",
+
+    # CapManEx
+    "ADDED: Total CapManEx costs (Kwacha)",
+
+    # OpEx
+    "ADDED: Are guards stationed at the scheme by the scheme committee?",
+    "ADDED: If yes, how much are they paid in total? (kwacha)",
+    "ADDED: Do they consistently use chlorine?",
+    "ADDED: average monthly minor repair costs",
+    "ADDED: Is the tank ever cleaned?",
+    "ADDED: What additional monthly costs does the cleaning incur?",
+
+    # Tariff Revenue
+    "What percent of users regularly pay the tariffs? (%)",
+    "ADDED: What percent can pay but don't want to?",
+    "ADDED: What percent can't pay?",
+    "How are tariffs collected?",
+    "How many communal taps are there?",
+    "ADDED: Communal tap monthly rate",
+    "How many private household taps are there?",
+    "ADDED: What is the monthly private household connection rate? (monthly kwacha)",
+    "How many Public Institution taps are there? Ex) school or healthcare facility",
+    "Do the public institutions pay a fee? If so, how much?",
+    "How much is currently in your bank account? (kwacha)",
+    "How much do you have in cash? (kwacha)",
+
+    # Concluding Questions
+    "ADDED: Is the scheme able to finance its own repairs?",
+    "ADDED: Do the tanks ever go empty?",
+    "ADDED: Did the scheme committee mention the need for better community engagement or more trainings?"
+  )
+
+# View the filtered data
+view(filtered_data)
+colnames(filtered_data)
+```
+
+```{r}
+Chikwawa <- raw_data |>  filter(District == "Chikwawa")
+Chiradzulu <- raw_data |>  filter(District == "Chiradzulu")
+
+#collumns <- colnames(Chikwawa)
+
 
 ```
+
+```{r}
+# Save the dataframes as CSV files
+#not working write_csv(Chikwawa, here::here("data/processed/Chikwawa.csv")
+write_csv(Chiradzulu, here::here("data/processed/Chiradzulu.csv"))
+```
+
+I have now made a new object including only the data i want to be working with. I will split to separate the data based on the scheme's district and make a new object for each.
 
 \[This will be the core of your analysis with specific requirements\]
 
