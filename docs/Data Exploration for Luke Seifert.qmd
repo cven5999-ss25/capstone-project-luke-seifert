@@ -126,13 +126,11 @@ Chiradzulu <- raw_data |>  filter(District == "Chiradzulu")
 
 #collumns <- colnames(Chikwawa)
 
-
-```
-
-```{r}
 # Save the dataframes as CSV files
-#not working write_csv(Chikwawa, here::here("data/processed/Chikwawa.csv")
-write_csv(Chiradzulu, here::here("data/processed/Chiradzulu.csv"))
+readr::write_csv(Chikwawa, here::here("data", "processed", "Chikwawa.csv"))
+readr::write_csv(Chiradzulu, here::here("data", "processed", "Chiradzulu.csv"))
+
+
 ```
 
 I have now made a new object including only the data i want to be working with. I will split to separate the data based on the scheme's district and make a new object for each.
