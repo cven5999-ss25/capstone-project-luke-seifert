@@ -62,10 +62,10 @@ The resulting tidied data set has been uploaded to the data/raw folder, and is r
 ```{r}
 
 #adding data to view first few rows of raw data
+
 #head(raw_data)
 dim(raw_data)
 #spec(raw_data)
-
 #colnames(raw_data)
 ```
 
@@ -115,25 +115,91 @@ filtered_data <- raw_data |>
     "ADDED: Did the scheme committee mention the need for better community engagement or more trainings?"
   )
 
+# Delete empty rows
+filtered_data <- filtered_data[-c(25:35), ]
+
 # View the filtered data
 view(filtered_data)
 colnames(filtered_data)
+
 ```
 
 ```{r}
-Chikwawa <- raw_data |>  filter(District == "Chikwawa")
-Chiradzulu <- raw_data |>  filter(District == "Chiradzulu")
 
-#collumns <- colnames(Chikwawa)
+collumns <- colnames(filtered_data)
+
+# Rename columns for easier coding
+filtered_data_renamed <- filtered_data |> 
+  rename(name = "What is the name of the scheme you are currently visiting?",
+         HH = "How many total households does this scheme service? (HH)",
+         HH_monthly_income = "What is the average household monthly income in this village? (kwacha)",
+         CapManEx_cost = "ADDED: Total CapManEx costs (Kwacha)",
+         guard = "ADDED: Are guards stationed at the scheme by the scheme committee?", 
+         guard_cost = "ADDED: If yes, how much are they paid in total? (kwacha)",
+         cl = "ADDED: Do they consistently use chlorine?",
+         tank_cleaned = "ADDED: Is the tank ever cleaned?",
+         tank_cleaned_cost = "ADDED: What additional monthly costs does the cleaning incur?",
+         per_reg_pay = "What percent of users regularly pay the tariffs? (%)",
+         per_wont_pay = "ADDED: What percent can pay but don't want to?",
+         per_cant_pay = "ADDED: What percent can't pay?",
+         comm_taps = "How many communal taps are there?",
+         comm_tap_rate = "ADDED: Communal tap monthly rate",
+         HH_taps = "How many private household taps are there?",
+         HH_par_rate = "ADDED: What is the monthly private household connection rate? (monthly kwacha)",
+         PI_taps = "How many Public Institution taps are there? Ex) school or healthcare facility",
+         bank_account = "How much is currently in your bank account? (kwacha)",
+         cash = "How much do you have in cash? (kwacha)",
+         finance_own_repairs = "ADDED: Is the scheme able to finance its own repairs?",
+         tanks_empty = "ADDED: Do the tanks ever go empty?",
+         want_trainings = "ADDED: Did the scheme committee mention the need for better community engagement or more trainings?",
+         OpEx_cost = "ADDED: average monthly minor repair costs",
+         )
+
+collumns_renamed = colnames(filtered_data_renamed)
+
+
+```
+
+```{r}
+# making some initial new variables
+
+# First, changing the data into numerical for calculations
+filtered_data_renamed <- filtered_data_renamed |> 
+  mutate(across(
+    c(CapManEx_cost, guard_cost, tank_cleaned_cost),
+    ~ as.numeric(.)
+  ))
+
+
+# calculate total monthly income for each scheme
+
+##### having troubles here
+
+filtered_data_renamed <- filtered_data_renamed %>%
+  mutate(
+    total_monthly_cost = rowSums(
+      select(., CapManEx_cost, guard_cost, tank_cleaned_cost),
+      na.rm = TRUE
+    )
+  )
+
+#### need to figure out why so many nas
+```
+
+```{r}
+Chikwawa <- filtered_data_renamed |>  filter(District == "Chikwawa")
+Chiradzulu <- filtered_data_renamed |>  filter(District == "Chiradzulu")
 
 # Save the dataframes as CSV files
 readr::write_csv(Chikwawa, here::here("data", "processed", "Chikwawa.csv"))
 readr::write_csv(Chiradzulu, here::here("data", "processed", "Chiradzulu.csv"))
+readr::write_csv(filtered_data_renamed, here::here("data", "processed", "filtered_data_renamed.csv"))
 
-
+view(collumns)
+view(collumns_renamed)
 ```
 
-I have now made a new object including only the data i want to be working with. I will split to separate the data based on the scheme's district and make a new object for each.
+I have now made a new object including only the data i want to be working with. I split the data based on the scheme's district and make a new object for each.
 
 \[This will be the core of your analysis with specific requirements\]
 
