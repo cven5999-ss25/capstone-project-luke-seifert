@@ -36,7 +36,7 @@ library(readr)
 library(ggplot2)
 
 # Read data
-raw_data <- read_csv(here::here("data/raw/WFP_data_cleaned_with_joseph_7_9.csv"))
+raw_data <- read_csv(here::here("data/raw/WFP_data_cleaned_with_joseph_7_10.csv"))
 ```
 
 ## Data Exploration Approach
@@ -105,7 +105,7 @@ filtered_data <- raw_data |>
     "How many private household taps are there?",
     "ADDED: What is the monthly private household connection rate? (monthly kwacha)",
     "How many Public Institution taps are there? Ex) school or healthcare facility",
-    "Do the public institutions pay a fee? If so, how much?",
+    "ADDED: Public Institution monthly contribution",
     "How much is currently in your bank account? (kwacha)",
     "How much do you have in cash? (kwacha)",
 
@@ -133,9 +133,11 @@ filtered_data_renamed <- filtered_data |>
   rename(name = "What is the name of the scheme you are currently visiting?",
          HH = "How many total households does this scheme service? (HH)",
          HH_monthly_income = "What is the average household monthly income in this village? (kwacha)",
+         date_finished = "When was the scheme finished being built?...3", 
+         water_volume = "How much total water can they hold? (liters)",
          CapManEx_cost = "ADDED: Total CapManEx costs (Kwacha)",
          guard = "ADDED: Are guards stationed at the scheme by the scheme committee?", 
-         guard_cost = "ADDED: If yes, how much are they paid in total? (kwacha)",
+         guard_mo_cost = "ADDED: If yes, how much are they paid in total? (kwacha)",
          cl = "ADDED: Do they consistently use chlorine?",
          tank_cleaned = "ADDED: Is the tank ever cleaned?",
          tank_cleaned_cost = "ADDED: What additional monthly costs does the cleaning incur?",
@@ -145,19 +147,47 @@ filtered_data_renamed <- filtered_data |>
          comm_taps = "How many communal taps are there?",
          comm_tap_rate = "ADDED: Communal tap monthly rate",
          HH_taps = "How many private household taps are there?",
-         HH_par_rate = "ADDED: What is the monthly private household connection rate? (monthly kwacha)",
+         HH_tap_rate = "ADDED: What is the monthly private household connection rate? (monthly kwacha)",
          PI_taps = "How many Public Institution taps are there? Ex) school or healthcare facility",
+         PI_mo_rate = "ADDED: Public Institution monthly contribution",
          bank_account = "How much is currently in your bank account? (kwacha)",
          cash = "How much do you have in cash? (kwacha)",
          finance_own_repairs = "ADDED: Is the scheme able to finance its own repairs?",
          tanks_empty = "ADDED: Do the tanks ever go empty?",
          want_trainings = "ADDED: Did the scheme committee mention the need for better community engagement or more trainings?",
-         OpEx_cost = "ADDED: average monthly minor repair costs",
+         minor_repair_mo_cost = "ADDED: average monthly minor repair costs",
          )
 
 collumns_renamed = colnames(filtered_data_renamed)
 
+view(collumns)
+view(collumns_renamed)
 
+```
+
+```{r}
+
+# I want to rename some of the schemes to be more visually appealing
+filtered_data_renamed <- filtered_data_renamed %>%
+  mutate(
+    name = case_when(
+      name == "Glasten scheme" ~ "Glasten (mega)",
+      name == "Njuli water scheme" ~ "Njuli",
+      name == "Kudziwa Scheme" ~ "Kudziwa",
+      name == "Ndunde water scheme" ~ "Ndunde",
+      name == "Malavi scheme" ~ "Malavi",
+      name == "Chikopa scheme" ~ "Chikopa",
+      name == "Muhasuwa water scheme" ~ "Muhasuwa",
+      name == "Ndakwera community" ~ "Ndakwera",
+      name == "Mwayi primary water scheme" ~ "Mwayi primary",
+      name == "Mphatika Water system" ~ "Mphatika",
+      name == "Tomali Primary School Scheme" ~ "Tomali Primary",
+      name == "Mangulenje Water Scheme" ~ "Mangulenje",
+      TRUE ~ name  # keep all other names unchanged
+    )
+  )
+
+unique(filtered_data_renamed$name)
 ```
 
 ```{r}
@@ -166,27 +196,100 @@ collumns_renamed = colnames(filtered_data_renamed)
 # First, changing the data into numerical for calculations
 filtered_data_renamed <- filtered_data_renamed |> 
   mutate(across(
-    c(CapManEx_cost, guard_cost, tank_cleaned_cost),
-    ~ as.numeric(.)
+    c(HH, HH_monthly_income, water_volume, CapManEx_cost, guard_mo_cost, 
+      per_reg_pay, per_wont_pay, per_cant_pay, comm_taps, comm_tap_rate, 
+      HH_taps, HH_tap_rate, PI_mo_rate, bank_account, cash, minor_repair_mo_cost),
+    as.numeric
   ))
 
 
-# calculate total monthly income for each scheme
-
-##### having troubles here
-
-filtered_data_renamed <- filtered_data_renamed %>%
+## CAPMANEX ##
+# Need to calculate the total months that have passed since completion
+library(lubridate)
+filtered_data_renamed <- filtered_data_renamed |> 
   mutate(
-    total_monthly_cost = rowSums(
-      select(., CapManEx_cost, guard_cost, tank_cleaned_cost),
-      na.rm = TRUE
-    )
+    mo_since_built = interval(ymd(date_finished), today()) %/% months(1)
   )
 
-#### need to figure out why so many nas
+# Now I want to calculate the monthly CapManEx costs
+filtered_data_renamed <- filtered_data_renamed |> 
+  mutate(
+    CapManEx_mo_cost = CapManEx_cost / mo_since_built
+  )
+
+
+## OPEX ##
+# First we need to create a new column for chlorine costs because most of the data on chlorine use was deemed not useable
+filtered_data_renamed <- filtered_data_renamed |> 
+  mutate(
+    cl_mo_cost = if_else(cl %in% c("yes", "Yes"), 12500, NA_real_)
+  )
+
+# Now I want to calc total monthly OpEx costs by adding the cost of the guards, minor repairs, and chlorine
+filtered_data_renamed <- filtered_data_renamed |> 
+  mutate(
+    OpEx_mo_cost = rowSums(across(c(guard_mo_cost, minor_repair_mo_cost, cl_mo_cost)), na.rm = TRUE)
+  )
+
+## TOTAL COST ##
+# Now I want to add CapManEx and OpEx to get the total monthly cost
+filtered_data_renamed <- filtered_data_renamed %>%
+  mutate(
+    total_mo_cost = rowSums(across(c(CapManEx_mo_cost, OpEx_mo_cost)), na.rm = TRUE)
+  )
+
+
+##Tariff Collection
+# Calc revenue collected by communal taps
+filtered_data_renamed <- filtered_data_renamed |> 
+  mutate(
+    comm_mo_tariff = HH * per_reg_pay / 100 * comm_tap_rate
+  )
+
+# Calc revenue collected by household private taps
+filtered_data_renamed <- filtered_data_renamed |> 
+  mutate(
+    HH_mo_tariff = HH_taps * HH_tap_rate
+  )
+
+# Add up communal, private household, and Public Institution incomes for total monthly income
+filtered_data_renamed <- filtered_data_renamed |> 
+  mutate(
+    total_mo_tariff = rowSums(across(c(comm_mo_tariff, HH_mo_tariff, PI_mo_rate)), na.rm = TRUE)
+  )
+
+view(filtered_data_renamed)
 ```
 
+Now we have the total monthly costs and monthly revenue collected by each scheme. We shall compare the two to visualize how the schemes are performing.
+
 ```{r}
+# Reshape data to long format
+plot_data <- filtered_data_renamed %>%
+  select(name, total_mo_cost, total_mo_tariff) %>%
+  pivot_longer(cols = c(total_mo_cost, total_mo_tariff),
+               names_to = "type",
+               values_to = "kwacha")
+
+# Create the double bar graph
+ggplot(plot_data, aes(x = name, y = kwacha, fill = type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = c(
+    "total_mo_cost" = "red",
+    "total_mo_tariff" = "green"
+  )) +
+  labs(x = "Scheme", y = "Kwacha", fill = "Type") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+```
+
+I now want to produce the same graph but divided by district
+
+```{r}
+# Divide the data by district and save into my processed data folder
 Chikwawa <- filtered_data_renamed |>  filter(District == "Chikwawa")
 Chiradzulu <- filtered_data_renamed |>  filter(District == "Chiradzulu")
 
@@ -195,8 +298,50 @@ readr::write_csv(Chikwawa, here::here("data", "processed", "Chikwawa.csv"))
 readr::write_csv(Chiradzulu, here::here("data", "processed", "Chiradzulu.csv"))
 readr::write_csv(filtered_data_renamed, here::here("data", "processed", "filtered_data_renamed.csv"))
 
-view(collumns)
-view(collumns_renamed)
+```
+
+```{r}
+## Chikwawa ##
+# Reshape data to long format
+plot_data_Chikwawa <- Chikwawa |> 
+  select(name, total_mo_cost, total_mo_tariff) |> 
+  pivot_longer(cols = c(total_mo_cost, total_mo_tariff),
+               names_to = "type",
+               values_to = "kwacha")
+
+# Create the double bar graph
+ggplot(plot_data_Chikwawa, aes(x = name, y = kwacha, fill = type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = c(
+    "total_mo_cost" = "red",
+    "total_mo_tariff" = "green"
+  )) +
+  labs(x = "Scheme", y = "Kwacha", fill = "Type", title = "Chikwawa") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+## Chiradzulu ##
+# Reshape data to long format
+plot_data_Chiradzulu <- Chiradzulu |> 
+  select(name, total_mo_cost, total_mo_tariff) |> 
+  pivot_longer(cols = c(total_mo_cost, total_mo_tariff),
+               names_to = "type",
+               values_to = "kwacha")
+
+# Create the double bar graph
+ggplot(plot_data_Chiradzulu, aes(x = name, y = kwacha, fill = type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = c(
+    "total_mo_cost" = "red",
+    "total_mo_tariff" = "green"
+  )) +
+  labs(x = "Scheme", y = "Kwacha", fill = "Type", title = "Chiradzulu") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
 ```
 
 I have now made a new object including only the data i want to be working with. I split the data based on the scheme's district and make a new object for each.
