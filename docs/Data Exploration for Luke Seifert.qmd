@@ -18,10 +18,7 @@ output:
 date: today
 execute: 
   warning: FALSE
-format:
-  html: 
-    code-fold: true
-    code-summary: "Show Code"
+format: html
 editor: visual
 editor_options: 
   chunk_output_type: console
@@ -50,7 +47,7 @@ library(ggplot2)
 
 
 # Read data
-raw_data <- read_csv(here::here("data/raw/WFP_data_cleaned_with_joseph_7_10.csv"))
+raw_data <- read_csv(here::here("data/raw/WFP_data_cleaned_with_joseph_7_15.csv"))
 ```
 
 ## Data Exploration Approach
@@ -67,7 +64,7 @@ Initial data tidying outside of posit.cloud consisted heavily of fixing obvious 
 
 Some questions were often skipped over or answered partially. Some of the data received was contradictory and needed follow-up outreach for clarification. Some responses were difficult to decipher due to the language barrier. Surveys with these issues were rejected and sent back to the corresponding WMA for re-submission, along with a direct follow-up with the WMA.
 
-The resulting tidied data set was then uploaded to the data/raw folder for further data tidying and analysis.
+The resulting tidied data set, `WFP_data_cleaned_with_joseph_7_15.csv`, was then uploaded to the data/raw folder for further data tidying and analysis.
 
 # Results
 
@@ -223,6 +220,8 @@ filtered_data_renamed <- filtered_data_renamed |>
 
 Now the data is cleaned up and saved in the `filtered_data_renamed` object.
 
+## Data Analysis
+
 Next, I want to start my initial analysis by creating some of the variables I will be working with directly. @create-variables calculates total monthly CapManEx costs, total monthly OpEx costs, and total monthly revenue for each scheme.
 
 ```{r}
@@ -355,9 +354,9 @@ summary_long |>
 
 ```
 
-#####add something about what this means
+Here @tbl-num_avgs shows that the average monthly revenue is much more than the average monthly costs of the schemes. It also shows that on average about 60% of users are paying tariffs.
 
-Now I will start my initial data visualizations. I want a visualization of how the cost and revenue of each scheme compares to assess how the schemes are performing. @fig-Cost-vs-Revenue shows how much monthly costs each scheme incurs *on average* in red, and how much monthly revenue it is collecting *on average* in green.
+Now I will start my initial data visualizations. I want a visualization of how the cost and revenue of each scheme compares to assess how the schemes are performing. @fig-Cost-vs-Revenue is a bar graph that shows how much monthly costs each scheme incurs *on average* in red, and how much monthly revenue it is collecting *on average* in green.
 
 ```{r}
 #| label: fig-Cost-vs-Revenue
@@ -388,9 +387,9 @@ ggplot(plot_data, aes(x = name, y = kwacha, fill = type)) +
 
 ```
 
-#####add something about what this means
+Here in @fig-Cost-vs-Revenue we can see that the Mangulenje and Ndakwera schemes make significantly more than the other schemes. We can also see that most of the schemes make more than they spend, but it is not that clear.
 
-Now I want to calculate how much money each scheme is making or losing each month by subtracting costs from revenue and plotting it in a colored bar graph. @fig-Monthly-Surplus-or-Deficit shows schemes' monthly net revenue, in order or losing the most to making the most. Schemes in the negative are plotted in red, and schemes in the positive are plotted in green.
+I want to show this information easier by calculating how much money each scheme is making or losing each month. I will do this by subtracting costs from revenue and plotting this in a colored bar graph. @fig-Monthly-Surplus-or-Deficit shows schemes' monthly net revenue, ordering them from losing the most to making the most. Schemes in the negative are plotted in red, and schemes in the positive are plotted in green.
 
 ```{r}
 #| label: fig-Monthly-Surplus-or-Deficit
@@ -421,9 +420,9 @@ ggplot(filtered_data_renamed, aes(x = reorder(name, mo_avg), y = mo_avg, fill = 
 
 ```
 
-Here we can see that overall, the majority of the schemes are collecting more revenue than the costs they incur, meaning that the majority of them have been able to finance their own OpEx and CapManEx thus far.
+Here @fig-Monthly-Surplus-or-Deficit shows that overall, the majority of the schemes are collecting more revenue than the costs they incur, meaning that they have been able to finance their own OpEx and CapManEx thus far.
 
-Now I want to plot this in order of households served to see if there is a correlation between households served and scheme success. @fig-net-profit-vs-HH plots the schemes in order on increasing households served on the x-axis, and their net profit on the y-axis.
+Now I want to plot this data in order of households served to see if there is a correlation between households served and scheme success. @fig-net-profit-vs-HH plots a line graph of the schemes in order of increasing households served on the x-axis, and their net profit on the y-axis.
 
 ```{r}
 #| label: fig-net-profit-vs-HH
@@ -451,12 +450,13 @@ ggplot(filtered_data_renamed_ordered, aes(x = name, y = mo_avg)) +
   )
 ```
 
-@fig-net-profit-vs-HH shows that there is a trend between serving more households and schemes making more net monthly money.
+@fig-net-profit-vs-HH shows that the schemes that serve more households are typically doing better then the schemes serving less households, suggesting a trend between more households served and scheme success.
 
-Now I want to calculate the average monthly rates based on if they use a guard or not. @tbl-guard-avg calculates the average net profit of all the schemes grouped by if they use a guard or not.
+Now I want to calculate the average monthly rates based on if they use a guard or not. @tbl-guard-avg is a table that shows the average net profit of all the schemes grouped by if they use a guard or not.
 
 ```{r}
-#|label: tbl-guard-avg
+#| label: tbl-guard-avg
+#| fig-cap: Table showing the average net profit grouped by if they use a guard
 
 # Create a binary guard usage column
 guard_avg <- filtered_data_renamed |> 
@@ -467,7 +467,10 @@ guard_avg <- filtered_data_renamed |>
     .groups = "drop"
   )
 
-print(guard_avg)
+guard_avg |> 
+  gt() |> 
+  tab_header(title = "Average net profit based on guard usage") |> 
+  fmt_number(columns = where(is.numeric), decimals = 1)
 ```
 
 @tbl-guard-avg shows that schemes that do not use a guard often have higher net monthly profits.
@@ -476,6 +479,7 @@ Now I want to do the same calculation excluding the Ndakwera and Mangulenje sche
 
 ```{r}
 #| label: tbl-guard-avg-filtered
+#| fig-cap: Table showing the average net profit grouped by if they use a guard, excluding outliers
 
 guard_avg_filtered <- filtered_data_renamed |> 
   # Step 1: Exclude Ndakwera and Mangulenje
@@ -491,17 +495,52 @@ guard_avg_filtered <- filtered_data_renamed |>
     .groups = "drop"
   )
 
-print(guard_avg_filtered)
+guard_avg_filtered |> 
+  gt() |> 
+  tab_header(title = "Average net profit based on guard usage excluding outliers") |> 
+  fmt_number(columns = where(is.numeric), decimals = 1)
 ```
 
-Here we see that @tbl-guard-avg-filtered still shows that schemes that do not use a guard often have higher net monthly profits. This is likely because guards are paid 30-50000 kwacha, often being the largest OpEx cost for the schemes.
+Here we see that @tbl-guard-avg-filtered still shows that schemes that do not use a guard often have higher net monthly profits. This is likely because guards are paid 30-50,000 kwacha, often being the largest OpEx cost for the schemes.
 
 ------------------------------------------------------------------------
-
-\[This will be the core of your analysis with specific requirements\]
 
 # Conclusions
 
 ## Summary of Findings
 
+-   The majority of the schemes are collecting more revenue through tariffs than they are incurring costs, meaning that the majority of schemes have been able to finance their own OpEx and CapManEx
+
+<!-- -->
+
+-   The 5 schemes that served the most households also saw the greatest net income
+
+-   The schemes in the upper half of households served were more often in the net positive than schemes in the lower half of households served
+
+-   Schemes that used guards were not necessarily doing better than schemes that were not using guards
+
 ## Questions and Next Steps
+
+Questions:
+
+-   Is this data reliable?
+
+    -   The data was collected by government workers, some of which had difficulty understanding the overall goal of the survey. Many surveys had to be rejected because of contradictory data.
+
+    -   Some of the answers were changed by WFP due to suspection of the water scheme committees lying. According to WFP, it is common for villages to lie about their circumstances and skew data to make it seem like they are doing worse than they actually are in hopes of getting more benefits from WFP
+
+    -   Some of the villages did not keep track of their actual costs and revenues, and answered questions based off of assumptions
+
+-   Is this data useful?
+
+    -   While this data is helpful in the aspect of providing solid numbers to stakeholders, it is questionable whether this will impact future decision making of water access stakeholders.
+
+Next steps:
+
+-   assess scheme data based on district
+
+-   assess scheme data based on number of each tap type: communal, private, and public institution
+
+-   take into account of future CapManEx costs - most of these schemes are less than 4 years old and have not incurred major CapManEx costs that would be expected of older schemes
+
+-   assess other factors from the data that contribute to tariff collection, such as village average income, percent of users regularly paying tariffs, and if the scheme committees expressed the need for more training

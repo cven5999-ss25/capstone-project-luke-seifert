@@ -130,8 +130,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="reading-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="reading-the-data">Reading the Data</h2>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
@@ -141,8 +139,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Read data</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/raw/WFP_data_cleaned_with_joseph_7_10.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/raw/WFP_data_cleaned_with_joseph_7_15.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="data-exploration-approach" class="level2">
@@ -155,7 +152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>With myself being several degrees removed from the raw data we are collecting, many of the survey responses needed some cleaning up before I was able to start analyzing.</p>
 <p>Initial data tidying outside of posit.cloud consisted heavily of fixing obvious data entry errors, addressing inconsistencies or questions left blank, and creating useful data out of response discrepancies.</p>
 <p>Some questions were often skipped over or answered partially. Some of the data received was contradictory and needed follow-up outreach for clarification. Some responses were difficult to decipher due to the language barrier. Surveys with these issues were rejected and sent back to the corresponding WMA for re-submission, along with a direct follow-up with the WMA.</p>
-<p>The resulting tidied data set was then uploaded to the data/raw folder for further data tidying and analysis.</p>
+<p>The resulting tidied data set, <code>WFP_data_cleaned_with_joseph_7_15.csv</code>, was then uploaded to the data/raw folder for further data tidying and analysis.</p>
 </section>
 </section>
 <section id="results" class="level1">
@@ -164,8 +161,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="initial-data-exploration">Initial Data Exploration</h2>
 <p>I started my initial data tidying within posit.cloud by refining my data set to be smaller and more user-friendly . <span class="citation" data-cites="select-variables">@select-variables</span> selects only the columns that I want to be working with. <span class="citation" data-cites="rename-variables">@rename-variables</span> renames my variables, or columns, to names that will be easier to code with. <span class="citation" data-cites="rename-schemes">@rename-schemes</span> renames some of the schemes for cleaner looking outputs later on.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Few initial functions I sometimes used to observe the data in posit.cloud</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#head(raw_data)</span></span>
@@ -220,11 +215,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete empty rows</span></span>
 <span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> filtered_data[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">25</span><span class="sc">:</span><span class="dv">35</span>), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the original column names encase I want to view them later</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>collumns <span class="ot">&lt;-</span> <span class="fu">colnames</span>(filtered_data)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -260,11 +252,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the renamed column names for ease of viewing as I move forward</span></span>
 <span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>collumns_renamed <span class="ot">=</span> <span class="fu">colnames</span>(filtered_data_renamed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename some of the schemes to make later outputs more visually appealing</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>filtered_data_renamed <span class="ot">&lt;-</span> filtered_data_renamed <span class="sc">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -288,12 +277,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove schemes that did not have adequate data</span></span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>filtered_data_renamed <span class="ot">&lt;-</span> filtered_data_renamed <span class="sc">|&gt;</span> </span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Kudziwa"</span>, <span class="st">"Ntondeza 1"</span>, <span class="st">"Kakoma Health center"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <p>Now that I have isolated the data I want to work with, I need to make sure my variables are in the right format for analysis. <span class="citation" data-cites="make-numerical">@make-numerical</span> changes my quantitative data into numerical variables.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Changing the necessary data into numerical for calculations</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>filtered_data_renamed <span class="ot">&lt;-</span> filtered_data_renamed <span class="sc">|&gt;</span> </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
@@ -302,13 +288,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      HH_taps, HH_tap_rate, PI_mo_rate, bank_account, cash, minor_repair_mo_cost),</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    as.numeric</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <p>Now the data is cleaned up and saved in the <code>filtered_data_renamed</code> object.</p>
+</section>
+<section id="data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="data-analysis">Data Analysis</h2>
 <p>Next, I want to start my initial analysis by creating some of the variables I will be working with directly. <span class="citation" data-cites="create-variables">@create-variables</span> calculates total monthly CapManEx costs, total monthly OpEx costs, and total monthly revenue for each scheme.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## CAPMANEX ##</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Need to start by calc the total months that have passed since completion</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
@@ -364,12 +350,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_mo_tariff =</span> <span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">c</span>(comm_mo_tariff, HH_mo_tariff, PI_mo_rate)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <p>Now that I have some variables to work with, I will analyzing my data. First, I want to output a table <a href="#tbl-SchemeInfo" class="quarto-xref">Table&nbsp;1</a> highlighting the key features of each scheme.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Select relevant columns</span></span>
@@ -379,17 +362,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    per_reg_pay, tanks_empty, total_mo_cost, total_mo_tariff,</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    CapManEx_mo_cost, OpEx_mo_cost</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># All Scheme table</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>table_for_show <span class="sc">|&gt;</span> </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"All Scheme Data"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">where</span>(is.numeric), <span class="at">decimals =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div id="tbl-SchemeInfo" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-SchemeInfo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -397,23 +376,23 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 </figcaption>
 <div aria-describedby="tbl-SchemeInfo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="bmshmsewbv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bmshmsewbv table {
+<div id="yylkwyjscc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yylkwyjscc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bmshmsewbv thead, #bmshmsewbv tbody, #bmshmsewbv tfoot, #bmshmsewbv tr, #bmshmsewbv td, #bmshmsewbv th {
+#yylkwyjscc thead, #yylkwyjscc tbody, #yylkwyjscc tfoot, #yylkwyjscc tr, #yylkwyjscc td, #yylkwyjscc th {
   border-style: none;
 }
 
-#bmshmsewbv p {
+#yylkwyjscc p {
   margin: 0;
   padding: 0;
 }
 
-#bmshmsewbv .gt_table {
+#yylkwyjscc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -439,12 +418,12 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   border-left-color: #D3D3D3;
 }
 
-#bmshmsewbv .gt_caption {
+#yylkwyjscc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bmshmsewbv .gt_title {
+#yylkwyjscc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -456,7 +435,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   border-bottom-width: 0;
 }
 
-#bmshmsewbv .gt_subtitle {
+#yylkwyjscc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -468,7 +447,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   border-top-width: 0;
 }
 
-#bmshmsewbv .gt_heading {
+#yylkwyjscc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -480,13 +459,13 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   border-right-color: #D3D3D3;
 }
 
-#bmshmsewbv .gt_bottom_border {
+#yylkwyjscc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bmshmsewbv .gt_col_headings {
+#yylkwyjscc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -501,7 +480,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   border-right-color: #D3D3D3;
 }
 
-#bmshmsewbv .gt_col_heading {
+#yylkwyjscc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -521,7 +500,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   overflow-x: hidden;
 }
 
-#bmshmsewbv .gt_column_spanner_outer {
+#yylkwyjscc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -533,15 +512,15 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   padding-right: 4px;
 }
 
-#bmshmsewbv .gt_column_spanner_outer:first-child {
+#yylkwyjscc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bmshmsewbv .gt_column_spanner_outer:last-child {
+#yylkwyjscc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bmshmsewbv .gt_column_spanner {
+#yylkwyjscc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -553,11 +532,11 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   width: 100%;
 }
 
-#bmshmsewbv .gt_spanner_row {
+#yylkwyjscc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bmshmsewbv .gt_group_heading {
+#yylkwyjscc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -583,7 +562,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   text-align: left;
 }
 
-#bmshmsewbv .gt_empty_group_heading {
+#yylkwyjscc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -598,15 +577,15 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   vertical-align: middle;
 }
 
-#bmshmsewbv .gt_from_md > :first-child {
+#yylkwyjscc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bmshmsewbv .gt_from_md > :last-child {
+#yylkwyjscc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bmshmsewbv .gt_row {
+#yylkwyjscc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -625,7 +604,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   overflow-x: hidden;
 }
 
-#bmshmsewbv .gt_stub {
+#yylkwyjscc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -638,7 +617,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   padding-right: 5px;
 }
 
-#bmshmsewbv .gt_stub_row_group {
+#yylkwyjscc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -652,15 +631,15 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   vertical-align: top;
 }
 
-#bmshmsewbv .gt_row_group_first td {
+#yylkwyjscc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bmshmsewbv .gt_row_group_first th {
+#yylkwyjscc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bmshmsewbv .gt_summary_row {
+#yylkwyjscc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -670,16 +649,16 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   padding-right: 5px;
 }
 
-#bmshmsewbv .gt_first_summary_row {
+#yylkwyjscc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bmshmsewbv .gt_first_summary_row.thick {
+#yylkwyjscc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bmshmsewbv .gt_last_summary_row {
+#yylkwyjscc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -689,7 +668,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   border-bottom-color: #D3D3D3;
 }
 
-#bmshmsewbv .gt_grand_summary_row {
+#yylkwyjscc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -699,7 +678,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   padding-right: 5px;
 }
 
-#bmshmsewbv .gt_first_grand_summary_row {
+#yylkwyjscc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -709,7 +688,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   border-top-color: #D3D3D3;
 }
 
-#bmshmsewbv .gt_last_grand_summary_row_top {
+#yylkwyjscc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -719,11 +698,11 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   border-bottom-color: #D3D3D3;
 }
 
-#bmshmsewbv .gt_striped {
+#yylkwyjscc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bmshmsewbv .gt_table_body {
+#yylkwyjscc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -732,7 +711,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   border-bottom-color: #D3D3D3;
 }
 
-#bmshmsewbv .gt_footnotes {
+#yylkwyjscc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -746,7 +725,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   border-right-color: #D3D3D3;
 }
 
-#bmshmsewbv .gt_footnote {
+#yylkwyjscc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -755,7 +734,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   padding-right: 5px;
 }
 
-#bmshmsewbv .gt_sourcenotes {
+#yylkwyjscc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -769,7 +748,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   border-right-color: #D3D3D3;
 }
 
-#bmshmsewbv .gt_sourcenote {
+#yylkwyjscc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -777,72 +756,72 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
   padding-right: 5px;
 }
 
-#bmshmsewbv .gt_left {
+#yylkwyjscc .gt_left {
   text-align: left;
 }
 
-#bmshmsewbv .gt_center {
+#yylkwyjscc .gt_center {
   text-align: center;
 }
 
-#bmshmsewbv .gt_right {
+#yylkwyjscc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bmshmsewbv .gt_font_normal {
+#yylkwyjscc .gt_font_normal {
   font-weight: normal;
 }
 
-#bmshmsewbv .gt_font_bold {
+#yylkwyjscc .gt_font_bold {
   font-weight: bold;
 }
 
-#bmshmsewbv .gt_font_italic {
+#yylkwyjscc .gt_font_italic {
   font-style: italic;
 }
 
-#bmshmsewbv .gt_super {
+#yylkwyjscc .gt_super {
   font-size: 65%;
 }
 
-#bmshmsewbv .gt_footnote_marks {
+#yylkwyjscc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bmshmsewbv .gt_asterisk {
+#yylkwyjscc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bmshmsewbv .gt_indent_1 {
+#yylkwyjscc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bmshmsewbv .gt_indent_2 {
+#yylkwyjscc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bmshmsewbv .gt_indent_3 {
+#yylkwyjscc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bmshmsewbv .gt_indent_4 {
+#yylkwyjscc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bmshmsewbv .gt_indent_5 {
+#yylkwyjscc .gt_indent_5 {
   text-indent: 25px;
 }
 
-#bmshmsewbv .katex-display {
+#yylkwyjscc .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#bmshmsewbv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#yylkwyjscc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -859,7 +838,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <th id="guard" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">guard</th>
 <th id="comm_taps" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">comm_taps</th>
 <th id="HH_taps" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">HH_taps</th>
-<th id="PI_taps" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">PI_taps</th>
+<th id="PI_taps" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">PI_taps</th>
 <th id="per_reg_pay" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">per_reg_pay</th>
 <th id="tanks_empty" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">tanks_empty</th>
 <th id="total_mo_cost" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">total_mo_cost</th>
@@ -876,7 +855,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">No</td>
 <td class="gt_row gt_right" headers="comm_taps">6.0</td>
 <td class="gt_row gt_right" headers="HH_taps">10.0</td>
-<td class="gt_row gt_left" headers="PI_taps">6</td>
+<td class="gt_row gt_right" headers="PI_taps">6.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">30.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">yes</td>
 <td class="gt_row gt_right" headers="total_mo_cost">34,772.7</td>
@@ -891,7 +870,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">Yes</td>
 <td class="gt_row gt_right" headers="comm_taps">6.0</td>
 <td class="gt_row gt_right" headers="HH_taps">10.0</td>
-<td class="gt_row gt_left" headers="PI_taps">6</td>
+<td class="gt_row gt_right" headers="PI_taps">6.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">50.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">no</td>
 <td class="gt_row gt_right" headers="total_mo_cost">74,833.3</td>
@@ -906,7 +885,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">Yes</td>
 <td class="gt_row gt_right" headers="comm_taps">10.0</td>
 <td class="gt_row gt_right" headers="HH_taps">10.0</td>
-<td class="gt_row gt_left" headers="PI_taps">0</td>
+<td class="gt_row gt_right" headers="PI_taps">0.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">60.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">yes</td>
 <td class="gt_row gt_right" headers="total_mo_cost">44,500.0</td>
@@ -921,7 +900,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">Yes</td>
 <td class="gt_row gt_right" headers="comm_taps">4.0</td>
 <td class="gt_row gt_right" headers="HH_taps">0.0</td>
-<td class="gt_row gt_left" headers="PI_taps">3 taps at Namikate school</td>
+<td class="gt_row gt_right" headers="PI_taps">3.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">60.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">yes</td>
 <td class="gt_row gt_right" headers="total_mo_cost">46,761.6</td>
@@ -936,7 +915,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">Yes</td>
 <td class="gt_row gt_right" headers="comm_taps">28.0</td>
 <td class="gt_row gt_right" headers="HH_taps">0.0</td>
-<td class="gt_row gt_left" headers="PI_taps">0</td>
+<td class="gt_row gt_right" headers="PI_taps">0.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">70.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">yes</td>
 <td class="gt_row gt_right" headers="total_mo_cost">84,928.6</td>
@@ -951,7 +930,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">Yes</td>
 <td class="gt_row gt_right" headers="comm_taps">4.0</td>
 <td class="gt_row gt_right" headers="HH_taps">0.0</td>
-<td class="gt_row gt_left" headers="PI_taps">2 taps at healthycare facility</td>
+<td class="gt_row gt_right" headers="PI_taps">2.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">60.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">no</td>
 <td class="gt_row gt_right" headers="total_mo_cost">104,000.0</td>
@@ -966,7 +945,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">Yes</td>
 <td class="gt_row gt_right" headers="comm_taps">5.0</td>
 <td class="gt_row gt_right" headers="HH_taps">NA</td>
-<td class="gt_row gt_left" headers="PI_taps">11</td>
+<td class="gt_row gt_right" headers="PI_taps">11.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">60.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">no</td>
 <td class="gt_row gt_right" headers="total_mo_cost">65,000.0</td>
@@ -981,7 +960,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">Yes</td>
 <td class="gt_row gt_right" headers="comm_taps">17.0</td>
 <td class="gt_row gt_right" headers="HH_taps">NA</td>
-<td class="gt_row gt_left" headers="PI_taps">1</td>
+<td class="gt_row gt_right" headers="PI_taps">1.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">70.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">yes</td>
 <td class="gt_row gt_right" headers="total_mo_cost">95,308.5</td>
@@ -996,7 +975,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">No</td>
 <td class="gt_row gt_right" headers="comm_taps">2.0</td>
 <td class="gt_row gt_right" headers="HH_taps">NA</td>
-<td class="gt_row gt_left" headers="PI_taps">4</td>
+<td class="gt_row gt_right" headers="PI_taps">4.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">82.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">no</td>
 <td class="gt_row gt_right" headers="total_mo_cost">20,375.0</td>
@@ -1011,7 +990,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">Yes</td>
 <td class="gt_row gt_right" headers="comm_taps">10.0</td>
 <td class="gt_row gt_right" headers="HH_taps">NA</td>
-<td class="gt_row gt_left" headers="PI_taps">NA</td>
+<td class="gt_row gt_right" headers="PI_taps">NA</td>
 <td class="gt_row gt_right" headers="per_reg_pay">60.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">no</td>
 <td class="gt_row gt_right" headers="total_mo_cost">33,000.0</td>
@@ -1026,7 +1005,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">Yes</td>
 <td class="gt_row gt_right" headers="comm_taps">9.0</td>
 <td class="gt_row gt_right" headers="HH_taps">NA</td>
-<td class="gt_row gt_left" headers="PI_taps">1</td>
+<td class="gt_row gt_right" headers="PI_taps">1.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">50.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">no</td>
 <td class="gt_row gt_right" headers="total_mo_cost">45,000.0</td>
@@ -1041,11 +1020,11 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">Yes</td>
 <td class="gt_row gt_right" headers="comm_taps">9.0</td>
 <td class="gt_row gt_right" headers="HH_taps">10.0</td>
-<td class="gt_row gt_left" headers="PI_taps">2</td>
+<td class="gt_row gt_right" headers="PI_taps">2.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">85.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">yes</td>
 <td class="gt_row gt_right" headers="total_mo_cost">41,400.0</td>
-<td class="gt_row gt_right" headers="total_mo_tariff">171,375.0</td>
+<td class="gt_row gt_right" headers="total_mo_tariff">162,375.0</td>
 <td class="gt_row gt_right" headers="CapManEx_mo_cost">8,000.0</td>
 <td class="gt_row gt_right" headers="OpEx_mo_cost">33,400.0</td>
 </tr>
@@ -1056,7 +1035,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">No</td>
 <td class="gt_row gt_right" headers="comm_taps">3.0</td>
 <td class="gt_row gt_right" headers="HH_taps">NA</td>
-<td class="gt_row gt_left" headers="PI_taps">3</td>
+<td class="gt_row gt_right" headers="PI_taps">3.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">75.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">no</td>
 <td class="gt_row gt_right" headers="total_mo_cost">17,500.0</td>
@@ -1071,7 +1050,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">No</td>
 <td class="gt_row gt_right" headers="comm_taps">NA</td>
 <td class="gt_row gt_right" headers="HH_taps">NA</td>
-<td class="gt_row gt_left" headers="PI_taps">6 taps</td>
+<td class="gt_row gt_right" headers="PI_taps">6.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">30.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">no</td>
 <td class="gt_row gt_right" headers="total_mo_cost">11,000.0</td>
@@ -1086,7 +1065,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">No</td>
 <td class="gt_row gt_right" headers="comm_taps">10.0</td>
 <td class="gt_row gt_right" headers="HH_taps">NA</td>
-<td class="gt_row gt_left" headers="PI_taps">NA</td>
+<td class="gt_row gt_right" headers="PI_taps">NA</td>
 <td class="gt_row gt_right" headers="per_reg_pay">100.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">no</td>
 <td class="gt_row gt_right" headers="total_mo_cost">20,800.0</td>
@@ -1101,7 +1080,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">No</td>
 <td class="gt_row gt_right" headers="comm_taps">6.0</td>
 <td class="gt_row gt_right" headers="HH_taps">10.0</td>
-<td class="gt_row gt_left" headers="PI_taps">2 taps</td>
+<td class="gt_row gt_right" headers="PI_taps">2.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">65.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">yes</td>
 <td class="gt_row gt_right" headers="total_mo_cost">22,000.0</td>
@@ -1116,7 +1095,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">No</td>
 <td class="gt_row gt_right" headers="comm_taps">10.0</td>
 <td class="gt_row gt_right" headers="HH_taps">NA</td>
-<td class="gt_row gt_left" headers="PI_taps">NA</td>
+<td class="gt_row gt_right" headers="PI_taps">NA</td>
 <td class="gt_row gt_right" headers="per_reg_pay">40.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">yes</td>
 <td class="gt_row gt_right" headers="total_mo_cost">11,000.0</td>
@@ -1131,7 +1110,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">No</td>
 <td class="gt_row gt_right" headers="comm_taps">1.0</td>
 <td class="gt_row gt_right" headers="HH_taps">10.0</td>
-<td class="gt_row gt_left" headers="PI_taps">8</td>
+<td class="gt_row gt_right" headers="PI_taps">8.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">50.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">no</td>
 <td class="gt_row gt_right" headers="total_mo_cost">17,500.0</td>
@@ -1146,7 +1125,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">No</td>
 <td class="gt_row gt_right" headers="comm_taps">6.0</td>
 <td class="gt_row gt_right" headers="HH_taps">NA</td>
-<td class="gt_row gt_left" headers="PI_taps">4</td>
+<td class="gt_row gt_right" headers="PI_taps">4.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">70.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">no</td>
 <td class="gt_row gt_right" headers="total_mo_cost">16,700.0</td>
@@ -1161,7 +1140,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">No</td>
 <td class="gt_row gt_right" headers="comm_taps">4.0</td>
 <td class="gt_row gt_right" headers="HH_taps">NA</td>
-<td class="gt_row gt_left" headers="PI_taps">2</td>
+<td class="gt_row gt_right" headers="PI_taps">2.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">60.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">yes</td>
 <td class="gt_row gt_right" headers="total_mo_cost">42,500.0</td>
@@ -1176,7 +1155,7 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <td class="gt_row gt_left" headers="guard">yes</td>
 <td class="gt_row gt_right" headers="comm_taps">25.0</td>
 <td class="gt_row gt_right" headers="HH_taps">5.0</td>
-<td class="gt_row gt_left" headers="PI_taps">2 taps</td>
+<td class="gt_row gt_right" headers="PI_taps">2.0</td>
 <td class="gt_row gt_right" headers="per_reg_pay">70.0</td>
 <td class="gt_row gt_left" headers="tanks_empty">no</td>
 <td class="gt_row gt_right" headers="total_mo_cost">52,500.0</td>
@@ -1195,8 +1174,6 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 </div>
 <p>Now that we have a table showing the key data for each scheme, I want to show an overview of the numerical data. <a href="#tbl-num_avgs" class="quarto-xref">Table&nbsp;2</a> shows the mean and standard deviation for the total monthly CapManEx costs, total monthly OpEx costs, total monthly costs, and total monthly tariffs (total_mo_cost, total_mo_tariff, CapManEx_mo_cost, and OpEx_mo_cost).</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select variables to show the mean and SD of</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> filtered_data_renamed <span class="sc">|&gt;</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
@@ -1228,7 +1205,6 @@ Table&nbsp;1: Table showing the main data that will be assessed for each scheme
 <span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"Mean and SD for numerical data"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">where</span>(is.numeric), <span class="at">decimals =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div id="tbl-num_avgs" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-num_avgs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1236,23 +1212,23 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
 </figcaption>
 <div aria-describedby="tbl-num_avgs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="ieitkvsfpt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ieitkvsfpt table {
+<div id="okqfskgqdh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#okqfskgqdh table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ieitkvsfpt thead, #ieitkvsfpt tbody, #ieitkvsfpt tfoot, #ieitkvsfpt tr, #ieitkvsfpt td, #ieitkvsfpt th {
+#okqfskgqdh thead, #okqfskgqdh tbody, #okqfskgqdh tfoot, #okqfskgqdh tr, #okqfskgqdh td, #okqfskgqdh th {
   border-style: none;
 }
 
-#ieitkvsfpt p {
+#okqfskgqdh p {
   margin: 0;
   padding: 0;
 }
 
-#ieitkvsfpt .gt_table {
+#okqfskgqdh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1278,12 +1254,12 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   border-left-color: #D3D3D3;
 }
 
-#ieitkvsfpt .gt_caption {
+#okqfskgqdh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ieitkvsfpt .gt_title {
+#okqfskgqdh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1295,7 +1271,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   border-bottom-width: 0;
 }
 
-#ieitkvsfpt .gt_subtitle {
+#okqfskgqdh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1307,7 +1283,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   border-top-width: 0;
 }
 
-#ieitkvsfpt .gt_heading {
+#okqfskgqdh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1319,13 +1295,13 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   border-right-color: #D3D3D3;
 }
 
-#ieitkvsfpt .gt_bottom_border {
+#okqfskgqdh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ieitkvsfpt .gt_col_headings {
+#okqfskgqdh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1340,7 +1316,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   border-right-color: #D3D3D3;
 }
 
-#ieitkvsfpt .gt_col_heading {
+#okqfskgqdh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1360,7 +1336,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   overflow-x: hidden;
 }
 
-#ieitkvsfpt .gt_column_spanner_outer {
+#okqfskgqdh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1372,15 +1348,15 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   padding-right: 4px;
 }
 
-#ieitkvsfpt .gt_column_spanner_outer:first-child {
+#okqfskgqdh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ieitkvsfpt .gt_column_spanner_outer:last-child {
+#okqfskgqdh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ieitkvsfpt .gt_column_spanner {
+#okqfskgqdh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1392,11 +1368,11 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   width: 100%;
 }
 
-#ieitkvsfpt .gt_spanner_row {
+#okqfskgqdh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ieitkvsfpt .gt_group_heading {
+#okqfskgqdh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1422,7 +1398,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   text-align: left;
 }
 
-#ieitkvsfpt .gt_empty_group_heading {
+#okqfskgqdh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1437,15 +1413,15 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   vertical-align: middle;
 }
 
-#ieitkvsfpt .gt_from_md > :first-child {
+#okqfskgqdh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ieitkvsfpt .gt_from_md > :last-child {
+#okqfskgqdh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ieitkvsfpt .gt_row {
+#okqfskgqdh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1464,7 +1440,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   overflow-x: hidden;
 }
 
-#ieitkvsfpt .gt_stub {
+#okqfskgqdh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1477,7 +1453,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   padding-right: 5px;
 }
 
-#ieitkvsfpt .gt_stub_row_group {
+#okqfskgqdh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1491,15 +1467,15 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   vertical-align: top;
 }
 
-#ieitkvsfpt .gt_row_group_first td {
+#okqfskgqdh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ieitkvsfpt .gt_row_group_first th {
+#okqfskgqdh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ieitkvsfpt .gt_summary_row {
+#okqfskgqdh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1509,16 +1485,16 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   padding-right: 5px;
 }
 
-#ieitkvsfpt .gt_first_summary_row {
+#okqfskgqdh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ieitkvsfpt .gt_first_summary_row.thick {
+#okqfskgqdh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ieitkvsfpt .gt_last_summary_row {
+#okqfskgqdh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1528,7 +1504,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   border-bottom-color: #D3D3D3;
 }
 
-#ieitkvsfpt .gt_grand_summary_row {
+#okqfskgqdh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1538,7 +1514,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   padding-right: 5px;
 }
 
-#ieitkvsfpt .gt_first_grand_summary_row {
+#okqfskgqdh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1548,7 +1524,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   border-top-color: #D3D3D3;
 }
 
-#ieitkvsfpt .gt_last_grand_summary_row_top {
+#okqfskgqdh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1558,11 +1534,11 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   border-bottom-color: #D3D3D3;
 }
 
-#ieitkvsfpt .gt_striped {
+#okqfskgqdh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ieitkvsfpt .gt_table_body {
+#okqfskgqdh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1571,7 +1547,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   border-bottom-color: #D3D3D3;
 }
 
-#ieitkvsfpt .gt_footnotes {
+#okqfskgqdh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1585,7 +1561,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   border-right-color: #D3D3D3;
 }
 
-#ieitkvsfpt .gt_footnote {
+#okqfskgqdh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1594,7 +1570,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   padding-right: 5px;
 }
 
-#ieitkvsfpt .gt_sourcenotes {
+#okqfskgqdh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1608,7 +1584,7 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   border-right-color: #D3D3D3;
 }
 
-#ieitkvsfpt .gt_sourcenote {
+#okqfskgqdh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1616,72 +1592,72 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
   padding-right: 5px;
 }
 
-#ieitkvsfpt .gt_left {
+#okqfskgqdh .gt_left {
   text-align: left;
 }
 
-#ieitkvsfpt .gt_center {
+#okqfskgqdh .gt_center {
   text-align: center;
 }
 
-#ieitkvsfpt .gt_right {
+#okqfskgqdh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ieitkvsfpt .gt_font_normal {
+#okqfskgqdh .gt_font_normal {
   font-weight: normal;
 }
 
-#ieitkvsfpt .gt_font_bold {
+#okqfskgqdh .gt_font_bold {
   font-weight: bold;
 }
 
-#ieitkvsfpt .gt_font_italic {
+#okqfskgqdh .gt_font_italic {
   font-style: italic;
 }
 
-#ieitkvsfpt .gt_super {
+#okqfskgqdh .gt_super {
   font-size: 65%;
 }
 
-#ieitkvsfpt .gt_footnote_marks {
+#okqfskgqdh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ieitkvsfpt .gt_asterisk {
+#okqfskgqdh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ieitkvsfpt .gt_indent_1 {
+#okqfskgqdh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ieitkvsfpt .gt_indent_2 {
+#okqfskgqdh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ieitkvsfpt .gt_indent_3 {
+#okqfskgqdh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ieitkvsfpt .gt_indent_4 {
+#okqfskgqdh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ieitkvsfpt .gt_indent_5 {
+#okqfskgqdh .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ieitkvsfpt .katex-display {
+#okqfskgqdh .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ieitkvsfpt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#okqfskgqdh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1710,8 +1686,8 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Variable">total_mo_tariff</td>
-<td class="gt_row gt_right" headers="Mean">105,292.0</td>
-<td class="gt_row gt_right" headers="SD">141,129.2</td>
+<td class="gt_row gt_right" headers="Mean">104,863.4</td>
+<td class="gt_row gt_right" headers="SD">140,932.0</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Variable">CapManEx_mo_cost</td>
@@ -1732,11 +1708,9 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
 </figure>
 </div>
 </div>
-<p>#####add something about what this means</p>
-<p>Now I will start my initial data visualizations. I want a visualization of how the cost and revenue of each scheme compares to assess how the schemes are performing. <a href="#fig-Cost-vs-Revenue" class="quarto-xref">Figure&nbsp;1</a> shows how much monthly costs each scheme incurs <em>on average</em> in red, and how much monthly revenue it is collecting <em>on average</em> in green.</p>
+<p>Here <a href="#tbl-num_avgs" class="quarto-xref">Table&nbsp;2</a> shows that the average monthly revenue is much more than the average monthly costs of the schemes. It also shows that on average about 60% of users are paying tariffs.</p>
+<p>Now I will start my initial data visualizations. I want a visualization of how the cost and revenue of each scheme compares to assess how the schemes are performing. <a href="#fig-Cost-vs-Revenue" class="quarto-xref">Figure&nbsp;1</a> is a bar graph that shows how much monthly costs each scheme incurs <em>on average</em> in red, and how much monthly revenue it is collecting <em>on average</em> in green.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape data to long format</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> filtered_data_renamed <span class="sc">|&gt;</span> </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, total_mo_cost, total_mo_tariff) <span class="sc">|&gt;</span> </span>
@@ -1759,7 +1733,6 @@ Table&nbsp;2: Table showing the mean and SD of the main data that will be assess
 <span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <div id="fig-Cost-vs-Revenue" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1773,11 +1746,9 @@ Figure&nbsp;1: Figure showing the costs vs.&nbsp;revenue incurred by each scheme
 </div>
 </div>
 </div>
-<p>#####add something about what this means</p>
-<p>Now I want to calculate how much money each scheme is making or losing each month by subtracting costs from revenue and plotting it in a colored bar graph. <a href="#fig-Monthly-Surplus-or-Deficit" class="quarto-xref">Figure&nbsp;2</a> shows schemes’ monthly net revenue, in order or losing the most to making the most. Schemes in the negative are plotted in red, and schemes in the positive are plotted in green.</p>
+<p>Here in <a href="#fig-Cost-vs-Revenue" class="quarto-xref">Figure&nbsp;1</a> we can see that the Mangulenje and Ndakwera schemes make significantly more than the other schemes. We can also see that most of the schemes make more than they spend, but it is not that clear.</p>
+<p>I want to show this information easier by calculating how much money each scheme is making or losing each month. I will do this by subtracting costs from revenue and plotting this in a colored bar graph. <a href="#fig-Monthly-Surplus-or-Deficit" class="quarto-xref">Figure&nbsp;2</a> shows schemes’ monthly net revenue, ordering them from losing the most to making the most. Schemes in the negative are plotted in red, and schemes in the positive are plotted in green.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find info on monthly money</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>filtered_data_renamed <span class="ot">&lt;-</span> filtered_data_renamed <span class="sc">|&gt;</span> </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mo_avg =</span> total_mo_tariff <span class="sc">-</span> total_mo_cost)</span>
@@ -1800,7 +1771,6 @@ Figure&nbsp;1: Figure showing the costs vs.&nbsp;revenue incurred by each scheme
 <span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
 <span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
 <span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <div id="fig-Monthly-Surplus-or-Deficit" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1814,11 +1784,9 @@ Figure&nbsp;2: Figure showing the net revenue incurred by each scheme
 </div>
 </div>
 </div>
-<p>Here we can see that overall, the majority of the schemes are collecting more revenue than the costs they incur, meaning that the majority of them have been able to finance their own OpEx and CapManEx thus far.</p>
-<p>Now I want to plot this in order of households served to see if there is a correlation between households served and scheme success. <a href="#fig-net-profit-vs-HH" class="quarto-xref">Figure&nbsp;3</a> plots the schemes in order on increasing households served on the x-axis, and their net profit on the y-axis.</p>
+<p>Here <a href="#fig-Monthly-Surplus-or-Deficit" class="quarto-xref">Figure&nbsp;2</a> shows that overall, the majority of the schemes are collecting more revenue than the costs they incur, meaning that they have been able to finance their own OpEx and CapManEx thus far.</p>
+<p>Now I want to plot this data in order of households served to see if there is a correlation between households served and scheme success. <a href="#fig-net-profit-vs-HH" class="quarto-xref">Figure&nbsp;3</a> plots a line graph of the schemes in order of increasing households served on the x-axis, and their net profit on the y-axis.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange by HH to control order on x-axis</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>filtered_data_renamed_ordered <span class="ot">&lt;-</span> filtered_data_renamed <span class="sc">|&gt;</span> </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(HH) <span class="sc">|&gt;</span> </span>
@@ -1839,7 +1807,6 @@ Figure&nbsp;2: Figure showing the net revenue incurred by each scheme
 <span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
 <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
 <span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <div id="fig-net-profit-vs-HH" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1853,80 +1820,1055 @@ Figure&nbsp;3: Figure showing the revenue - costs incurred by each scheme in ord
 </div>
 </div>
 </div>
-<p><a href="#fig-net-profit-vs-HH" class="quarto-xref">Figure&nbsp;3</a> shows that there is a trend between serving more households and schemes making more net monthly money.</p>
-<p>Now I want to calculate the average monthly rates based on if they use a guard or not. <strong>?@tbl-guard-avg</strong> calculates the average net profit of all the schemes grouped by if they use a guard or not.</p>
+<p><a href="#fig-net-profit-vs-HH" class="quarto-xref">Figure&nbsp;3</a> shows that the schemes that serve more households are typically doing better then the schemes serving less households, suggesting a trend between more households served and scheme success.</p>
+<p>Now I want to calculate the average monthly rates based on if they use a guard or not. <a href="#tbl-guard-avg" class="quarto-xref">Table&nbsp;3</a> is a table that shows the average net profit of all the schemes grouped by if they use a guard or not.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Show Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|label: tbl-guard-avg</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a binary guard usage column</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>guard_avg <span class="ot">&lt;-</span> filtered_data_renamed <span class="sc">|&gt;</span> </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">guard_used =</span> <span class="fu">if_else</span>(<span class="fu">tolower</span>(guard) <span class="sc">==</span> <span class="st">"yes"</span>, <span class="st">"Uses Guard"</span>, <span class="st">"No Guard"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(guard_used) <span class="sc">|&gt;</span> </span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_mo_avg =</span> <span class="fu">mean</span>(mo_avg, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(guard_avg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  guard_used avg_mo_avg
-  &lt;chr&gt;           &lt;dbl&gt;
-1 No Guard       71316.
-2 Uses Guard     54236.</code></pre>
-</div>
-</div>
-<p><strong>?@tbl-guard-avg</strong> shows that schemes that do not use a guard often have higher net monthly profits.</p>
-<p>Now I want to do the same calculation excluding the Ndakwera and Mangulenje schemes because they are somewhat of outliers. <a href="#tbl-guard-avg-filtered" class="quarto-xref">Table&nbsp;3</a> does the same calculation as before, but excludes the highest grossing schemes.</p>
-<details class="code-fold">
-<summary>Show Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>guard_avg_filtered <span class="ot">&lt;-</span> filtered_data_renamed <span class="sc">|&gt;</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Step 1: Exclude Ndakwera and Mangulenje</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Ndakwera"</span>, <span class="st">"Mangulenje"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Step 2: Create a clean guard usage label</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">guard_used =</span> <span class="fu">if_else</span>(<span class="fu">tolower</span>(guard) <span class="sc">==</span> <span class="st">"yes"</span>, <span class="st">"Uses Guard"</span>, <span class="st">"No Guard"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Step 3: Group and calculate average mo_avg</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(guard_used) <span class="sc">|&gt;</span> </span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_mo_avg =</span> <span class="fu">mean</span>(mo_avg, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(guard_avg_filtered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div id="tbl-guard-avg-filtered" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a binary guard usage column</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>guard_avg <span class="ot">&lt;-</span> filtered_data_renamed <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">guard_used =</span> <span class="fu">if_else</span>(<span class="fu">tolower</span>(guard) <span class="sc">==</span> <span class="st">"yes"</span>, <span class="st">"Uses Guard"</span>, <span class="st">"No Guard"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(guard_used) <span class="sc">|&gt;</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_mo_avg =</span> <span class="fu">mean</span>(mo_avg, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>guard_avg <span class="sc">|&gt;</span> </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"Average net profit based on guard usage"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">where</span>(is.numeric), <span class="at">decimals =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-guard-avg" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-guard-avg-filtered-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-guard-avg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;3
 </figcaption>
-<div aria-describedby="tbl-guard-avg-filtered-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  guard_used avg_mo_avg
-  &lt;chr&gt;           &lt;dbl&gt;
-1 No Guard       22995.
-2 Uses Guard     16209.</code></pre>
+<div aria-describedby="tbl-guard-avg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="tcdjgjiibl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#tcdjgjiibl table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#tcdjgjiibl thead, #tcdjgjiibl tbody, #tcdjgjiibl tfoot, #tcdjgjiibl tr, #tcdjgjiibl td, #tcdjgjiibl th {
+  border-style: none;
+}
+
+#tcdjgjiibl p {
+  margin: 0;
+  padding: 0;
+}
+
+#tcdjgjiibl .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#tcdjgjiibl .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#tcdjgjiibl .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#tcdjgjiibl .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#tcdjgjiibl .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#tcdjgjiibl .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tcdjgjiibl .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#tcdjgjiibl .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#tcdjgjiibl .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#tcdjgjiibl .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#tcdjgjiibl .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#tcdjgjiibl .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#tcdjgjiibl .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#tcdjgjiibl .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#tcdjgjiibl .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#tcdjgjiibl .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#tcdjgjiibl .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#tcdjgjiibl .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#tcdjgjiibl .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tcdjgjiibl .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#tcdjgjiibl .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#tcdjgjiibl .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#tcdjgjiibl .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tcdjgjiibl .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#tcdjgjiibl .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#tcdjgjiibl .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tcdjgjiibl .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tcdjgjiibl .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#tcdjgjiibl .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tcdjgjiibl .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#tcdjgjiibl .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tcdjgjiibl .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#tcdjgjiibl .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tcdjgjiibl .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#tcdjgjiibl .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tcdjgjiibl .gt_left {
+  text-align: left;
+}
+
+#tcdjgjiibl .gt_center {
+  text-align: center;
+}
+
+#tcdjgjiibl .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#tcdjgjiibl .gt_font_normal {
+  font-weight: normal;
+}
+
+#tcdjgjiibl .gt_font_bold {
+  font-weight: bold;
+}
+
+#tcdjgjiibl .gt_font_italic {
+  font-style: italic;
+}
+
+#tcdjgjiibl .gt_super {
+  font-size: 65%;
+}
+
+#tcdjgjiibl .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#tcdjgjiibl .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#tcdjgjiibl .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#tcdjgjiibl .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#tcdjgjiibl .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#tcdjgjiibl .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#tcdjgjiibl .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#tcdjgjiibl .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#tcdjgjiibl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table do-not-create-environment caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border">Average net profit based on guard usage</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="guard_used" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">guard_used</th>
+<th id="avg_mo_avg" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">avg_mo_avg</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="guard_used">No Guard</td>
+<td class="gt_row gt_right" headers="avg_mo_avg">71,315.8</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="guard_used">Uses Guard</td>
+<td class="gt_row gt_right" headers="avg_mo_avg">53,417.5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<p>Table showing the average net profit grouped by if they use a guard</p>
 </div>
 </div>
 </figure>
 </div>
-<p>Here we see that <a href="#tbl-guard-avg-filtered" class="quarto-xref">Table&nbsp;3</a> still shows that schemes that do not use a guard often have higher net monthly profits. This is likely because guards are paid 30-50000 kwacha, often being the largest OpEx cost for the schemes.</p>
+</div>
+<p><a href="#tbl-guard-avg" class="quarto-xref">Table&nbsp;3</a> shows that schemes that do not use a guard often have higher net monthly profits.</p>
+<p>Now I want to do the same calculation excluding the Ndakwera and Mangulenje schemes because they are somewhat of outliers. <a href="#tbl-guard-avg-filtered" class="quarto-xref">Table&nbsp;4</a> does the same calculation as before, but excludes the highest grossing schemes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>guard_avg_filtered <span class="ot">&lt;-</span> filtered_data_renamed <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Step 1: Exclude Ndakwera and Mangulenje</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Ndakwera"</span>, <span class="st">"Mangulenje"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Step 2: Create a clean guard usage label</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">guard_used =</span> <span class="fu">if_else</span>(<span class="fu">tolower</span>(guard) <span class="sc">==</span> <span class="st">"yes"</span>, <span class="st">"Uses Guard"</span>, <span class="st">"No Guard"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Step 3: Group and calculate average mo_avg</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(guard_used) <span class="sc">|&gt;</span> </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_mo_avg =</span> <span class="fu">mean</span>(mo_avg, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>guard_avg_filtered <span class="sc">|&gt;</span> </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"Average net profit based on guard usage excluding outliers"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">where</span>(is.numeric), <span class="at">decimals =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-guard-avg-filtered" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-guard-avg-filtered-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4
+</figcaption>
+<div aria-describedby="tbl-guard-avg-filtered-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="qgtucltkue" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qgtucltkue table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#qgtucltkue thead, #qgtucltkue tbody, #qgtucltkue tfoot, #qgtucltkue tr, #qgtucltkue td, #qgtucltkue th {
+  border-style: none;
+}
+
+#qgtucltkue p {
+  margin: 0;
+  padding: 0;
+}
+
+#qgtucltkue .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#qgtucltkue .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#qgtucltkue .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#qgtucltkue .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#qgtucltkue .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qgtucltkue .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qgtucltkue .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qgtucltkue .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#qgtucltkue .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#qgtucltkue .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#qgtucltkue .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#qgtucltkue .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#qgtucltkue .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#qgtucltkue .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#qgtucltkue .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#qgtucltkue .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#qgtucltkue .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#qgtucltkue .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#qgtucltkue .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qgtucltkue .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#qgtucltkue .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#qgtucltkue .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#qgtucltkue .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qgtucltkue .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#qgtucltkue .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#qgtucltkue .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qgtucltkue .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qgtucltkue .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#qgtucltkue .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qgtucltkue .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#qgtucltkue .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qgtucltkue .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qgtucltkue .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qgtucltkue .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qgtucltkue .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qgtucltkue .gt_left {
+  text-align: left;
+}
+
+#qgtucltkue .gt_center {
+  text-align: center;
+}
+
+#qgtucltkue .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#qgtucltkue .gt_font_normal {
+  font-weight: normal;
+}
+
+#qgtucltkue .gt_font_bold {
+  font-weight: bold;
+}
+
+#qgtucltkue .gt_font_italic {
+  font-style: italic;
+}
+
+#qgtucltkue .gt_super {
+  font-size: 65%;
+}
+
+#qgtucltkue .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#qgtucltkue .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#qgtucltkue .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#qgtucltkue .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#qgtucltkue .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#qgtucltkue .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#qgtucltkue .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#qgtucltkue .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#qgtucltkue div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table do-not-create-environment caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border">Average net profit based on guard usage excluding outliers</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="guard_used" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">guard_used</th>
+<th id="avg_mo_avg" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">avg_mo_avg</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="guard_used">No Guard</td>
+<td class="gt_row gt_right" headers="avg_mo_avg">22,995.4</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="guard_used">Uses Guard</td>
+<td class="gt_row gt_right" headers="avg_mo_avg">15,309.3</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<p>Table showing the average net profit grouped by if they use a guard, excluding outliers</p>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Here we see that <a href="#tbl-guard-avg-filtered" class="quarto-xref">Table&nbsp;4</a> still shows that schemes that do not use a guard often have higher net monthly profits. This is likely because guards are paid 30-50,000 kwacha, often being the largest OpEx cost for the schemes.</p>
 <hr>
-<p>[This will be the core of your analysis with specific requirements]</p>
 </section>
 </section>
 <section id="conclusions" class="level1">
 <h1>Conclusions</h1>
 <section id="summary-of-findings" class="level2">
 <h2 class="anchored" data-anchor-id="summary-of-findings">Summary of Findings</h2>
+<ul>
+<li>The majority of the schemes are collecting more revenue through tariffs than they are incurring costs, meaning that the majority of schemes have been able to finance their own OpEx and CapManEx</li>
+</ul>
+<!-- -->
+<ul>
+<li><p>The 5 schemes that served the most households also saw the greatest net income</p></li>
+<li><p>The schemes in the upper half of households served were more often in the net positive than schemes in the lower half of households served</p></li>
+<li><p>Schemes that used guards were not necessarily doing better than schemes that were not using guards</p></li>
+</ul>
 </section>
 <section id="questions-and-next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="questions-and-next-steps">Questions and Next Steps</h2>
+<p>Questions:</p>
+<ul>
+<li><p>Is this data reliable?</p>
+<ul>
+<li><p>The data was collected by government workers, some of which had difficulty understanding the overall goal of the survey. Many surveys had to be rejected because of contradictory data.</p></li>
+<li><p>Some of the answers were changed by WFP due to suspection of the water scheme committees lying. According to WFP, it is common for villages to lie about their circumstances and skew data to make it seem like they are doing worse than they actually are in hopes of getting more benefits from WFP</p></li>
+<li><p>Some of the villages did not keep track of their actual costs and revenues, and answered questions based off of assumptions</p></li>
+</ul></li>
+<li><p>Is this data useful?</p>
+<ul>
+<li>While this data is helpful in the aspect of providing solid numbers to stakeholders, it is questionable whether this will impact future decision making of water access stakeholders.</li>
+</ul></li>
+</ul>
+<p>Next steps:</p>
+<ul>
+<li><p>assess scheme data based on district</p></li>
+<li><p>assess scheme data based on number of each tap type: communal, private, and public institution</p></li>
+<li><p>take into account of future CapManEx costs - most of these schemes are less than 4 years old and have not incurred major CapManEx costs that would be expected of older schemes</p></li>
+<li><p>assess other factors from the data that contribute to tariff collection, such as village average income, percent of users regularly paying tariffs, and if the scheme committees expressed the need for more training</p></li>
+</ul>
 </section>
 </section>
 
